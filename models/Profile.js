@@ -67,7 +67,8 @@ const ProfileSchema = new Schema({
                 required: true
             },
             description: {
-                type: String
+                type: String,
+                required: true
 
             },
             challenges: {
@@ -107,7 +108,7 @@ const ProfileSchema = new Schema({
             evaluationBody: {
                 type: String
             },
-    }
+    },
     ],
     social: {
         youtube: {

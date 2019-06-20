@@ -6,6 +6,7 @@ const passport = require('passport');
  
 // Load validation input 
 const validateProfileInput = require('../../validation/profile');
+const validateSpeechGivenInput = require('../../validation/speeches');
 // Load profile model
 
 
@@ -129,12 +130,71 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res)=>{
 
     });
 
-    // @route GET api/profile/user/:userId
-    // @desc Get profile by handle
+      
+    // @route POST api/profile/experience
+    // @desc Add experience to profile
     // @access Public
 
+    router.post('/speeches', passport.authenticate('jwt', {session: false}), (req, res) => {
+        const { errors, isValid} = validateSpeechGivenInput(req.body);
+        if(!isValid){
+            return res.status(400).json(errors);
 
-    
+        }
+
+        Profile.findOne({user : req.user.id})
+        .then(profile => {
+            const newSpeech = {
+                titleOfSpeech: req.body.titleOfSpeech,
+                speechType: req.body.speechType,
+                club: req.body.club,
+                date: req.body.date,
+                description: req.body.description,
+                challenges: req.body.challenges,
+                speechBody: req.body.speechBody, 
+
+            }
+
+       
+        profile.speechesGiven.unshift(newSpeech);
+        profile.save().then(profile => {
+
+            res.json(profile);
+        });
+    });
+    });
+      // @route POST api/profile/evaluations
+    // @desc Add evaluations to profile
+    // @access Public
+
+    router.post('/evaluations', passport.authenticate('jwt', {session: false}), (req, res) => {
+        const { errors, isValid} = validateSpeechGivenInput(req.body);
+        if(!isValid){
+            return res.status(400).json(errors);
+
+        }
+
+        Profile.findOne({user : req.user.id})
+        .then(profile => {
+            const newEval = {
+                titleOfSpeech: req.body.titleOfSpeech,
+                speechType: req.body.speechType,
+                club: req.body.club,
+                date: req.body.date,
+                description: req.body.description,
+                challenges: req.body.challenges,
+                evaluationBody: req.body.evaluationBody, 
+
+            }
+
+       
+        profile.speechesEvaluated.unshift(newEval);
+        profile.save().then(profile => {
+
+            res.json(profile);
+        });
+    });
+    });
     // @route GET api/profile/all
     // @desc Get all profiles
     // @access Public
@@ -157,6 +217,11 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res)=>{
     }
         );
 
+    // @route GET api/profile/user/:userId
+    // @desc Get profile by handle
+    // @access Public
+
+
 
     router.get('/user/:userId', (req, res) => {
 
@@ -177,6 +242,67 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res)=>{
 
     });
 
+ // @route DELETE api/profile/speeches/:userId
+    // @desc Delete speech 
+    // @access Private
+    
+
+    router.delete('/speeches/:speechId', passport.authenticate('jwt', {session: false}), (req, res) => {
+   
+            Profile.findOne({user : req.user.id})
+            .then(profile => {
+                const removeIndex  = profile.speechesGiven
+                .map(item => item.id)
+                .indexOf(req.params.speechId );
+
+                profile.speechesGiven.splice(removeIndex, 1);
+                console.log(profile);
+                //Save
+                profile.save().then(profile => res.json(profile));
+        }).catch(err => res.status(404).json(err));
+        });
+
+        
+ // @route DELETE api/profile/speeches/:userId
+    // @desc Delete speech 
+    // @access Private
+    
+
+    router.delete('/evaluations/:sevalId', passport.authenticate('jwt', {session: false}), (req, res) => {
+   
+        Profile.findOne({user : req.user.id})
+        .then(profile => {
+            const removeIndex  = profile.speechesEvaluated
+            .map(item => item.id)
+            .indexOf(req.params.speechId );
+
+            profile.speechesEvaluated.splice(removeIndex, 1);
+            console.log(profile);
+            //Save
+            profile.save().then(profile => res.json(profile));
+    }).catch(err => res.status(404).json(err));
+    });
+
+
+
+    
+ // @route DELETE api/profile/speeches/:userId
+    // @desc Delete speech 
+    // @access Private
+    
+
+    router.delete('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+   
+        Profile.findOneAndRemove({user: req.user.id})
+        .then(()=> {
+            User.findOneAndRemove({_id: req.user.id}).then(
+                () => {
+                    res.json({success: true})
+                }
+            );
+
+        });
+    });
 
 
 // @route GET api/profile/test

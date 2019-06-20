@@ -35,17 +35,35 @@ const PostSchema = new Schema({
         }
 
     ],
-    comments: [
+    commendations: [
         {
             user: {
                 type: Schema.Types.ObjectId,
                 ref: 'users'
             },
-            commendations: {
+            text: {
                 type: String,
                 required: true
             },
-            recommendations: {
+            name : {
+                type: String,
+            },
+            avatar: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+
+    ],     recommendations: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users'
+            },
+            text: {
                 type: String,
                 required: true
             },
