@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {loginUser} from '../../actions/authActions';
-import classnames from 'classnames';
-
+import TextFieldGroupInput from '../common/TextFieldGroupInput';
  class Login extends Component {
 
     
@@ -62,28 +61,19 @@ import classnames from 'classnames';
                   <h1 className="display-4 text-center">Log In</h1>
                   <p className="lead text-center">Sign in to your DevConnector account</p>
                   <form onSubmit={this.onSubmit.bind(this)}>
-                    <div className="form-group">
-                      <input type="email" 
-                        value={this.state.email}
+                      <TextFieldGroupInput 
+                       placeholder="Email Address" name="email"
+                       value={this.state.email}
                         onChange={this.onChange}
-                      className={classnames('form-control form-control-lg', {
-                        'is-invalid' : errors.email
-                      })}  
-                       placeholder="Email Address" name="email" />
-                     {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
-                
-                    </div>
-
-                    <div className="form-group"> 
-                      <input type="password" 
-                         value={this.state.password}
-                         onChange={this.onChange}
-                       className={classnames('form-control form-control-lg', {
-                          'is-invalid' : errors.password
-                        })}  placeholder="Password" name="password" />
-                               {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
-               
-                    </div>
+                        error ={errors.email}
+                      />
+                      <TextFieldGroupInput 
+                      placeholder="Password" name="password"
+                       value={this.state.password}
+                       onChange={this.onChange}
+                        error =  {errors.password}
+                        type='password'
+                      />
                     <input type="submit" 
                     
                     className="btn btn-info btn-block mt-4" />

@@ -9,11 +9,17 @@ export const registerUser = (userData, history) => dispatch => {
     axios.post('http://localhost:5000/api/users/register'
     ,userData).then(response => {
         history.push('/login');
-    }).catch(err =>
+    }).catch(err =>{
+            if(err.response){
             dispatch({
                 type: GET_ERRORS,
-                payload: err
+                payload: err.response.data
             })
+        }
+        else{
+            console.log('Server error\n',err);
+        }
+        }
     );
 };
 
@@ -38,13 +44,16 @@ export const loginUser = (userData) => dispatch => {
             // Set current user
             dispatch(setCurrentUser(decoded));
     }).catch(err =>{
-        console.log(err);
             if(err.response){
                 dispatch({
                     type: GET_ERRORS,
                     payload: err.response.data
                 });
-    }}   
+    }
+    else{
+        console.log('Server error\n',err);
+    }
+}   
     );
 
 };
