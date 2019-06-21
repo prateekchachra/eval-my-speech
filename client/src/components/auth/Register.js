@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {registerUser} from '../../actions/authActions';
 import classnames from 'classnames';
+import {withRouter} from 'react-router-dom';
 
-
-export default class Register extends Component {
+class Register extends Component {
 
     constructor(){
 
@@ -20,7 +23,13 @@ export default class Register extends Component {
     onChange(e){
         this.setState({[e.target.name]: e.target.value});
     }
+    
+    componentDidMount(){
+      if(this.props.auth.isAuthenticated){
+        this.props.history.push('/dashboard');
 
+      }
+    }
     onSubmit(e){
         e.preventDefault(); 
         const newUser= {
@@ -28,23 +37,25 @@ export default class Register extends Component {
             email: this.state.email,
             password: this.state.password,
             password2: this.state.password2
+        };
+       
+        this.props.registerUser(newUser, this.props.history);
+      }
+      componentWillReceiveProps(nextProps){
+        if(nextProps.errors){
+          this.setState({errors: nextProps.errors});
         }
-
-        fetch('http://localhost:5000/api/users/register', {method: 'POST', body: JSON.stringify(newUser),
-      })
-        .then(res => res.json()
-        ).then(json => this.setState({errors: json}))
-        .catch(err => console.log(err));
-      
       }
 
     render() {
 
       const { errors } = this.state;
-
+      const {user} = this.props.auth;
 
         return (
             <div className="register">
+              
+          {user? user.name : null}
             <div className="container">
               <div className="row">
                 <div className="col-md-8 m-auto">
@@ -60,7 +71,9 @@ export default class Register extends Component {
                         })} 
                         placeholder="Name" name="name" />
 
-                        {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
+                        {errors.name && (<div className="invalid-feedback">{
+                          errors.name}</div>
+                        )}
                     </div>
                     <div className="form-group">
                       <input type="email" value={this.state.email} 
@@ -100,3 +113,20 @@ export default class Register extends Component {
         )
     }
 }
+
+Register.propTypes = {
+  registerUser : PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+
+
+}
+
+
+const mapStateToProps = (state) => ({
+
+auth: state.auth,
+errors : state.errors
+});
+
+export default connect(mapStateToProps, {registerUser})(withRouter(Register));
