@@ -16,7 +16,11 @@ const db = require('./config/keys').mongoURI;
 const app = express();
 // Connect to MongoDB
 app.use(passport.initialize());
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 //Passport config
 
 require('./config/passport.js')(passport);
