@@ -34,10 +34,6 @@ mongoose.connect(db).
     then(()=> console.log('Connected successfully'))
     .catch((error) => console.log(error));
 
-app.get('/', (req,res)=> {
-    res.send('Hello')
-});
-
 //Use routes
 
 app.use('/api/users',users);
@@ -55,7 +51,7 @@ if(process.env.NODE_ENV === 'production'){
     });
 
 
-}
+}   
 const port = process.env.PORT || 5000;
 
 
