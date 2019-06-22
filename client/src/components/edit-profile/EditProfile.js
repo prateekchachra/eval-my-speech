@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TextFieldGroupInput from '../common/TextFieldGroupInput';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
-import {createProfile} from '../../actions/profileActions'
+import {createProfile, getCurrentProfile} from '../../actions/profileActions'
 
-class CreateProfile extends Component {
+import isEmpty from '../../validation/is-empty';
+
+
+class EditProfile extends Component {
 
     constructor(props){
         super (props);
@@ -35,7 +38,10 @@ class CreateProfile extends Component {
         }
         this.onChange = this.onChange.bind(this);
     }   
+    componentDidMount(){
+        this.props.getCurrentProfile();
 
+    }
     onSubmit(e){
         e.preventDefault();
         const profileData = {
@@ -69,8 +75,48 @@ class CreateProfile extends Component {
         if(nextProps.errors)
             this.setState({errors: nextProps.errors});
 
-    }
+            if(nextProps.profile){
+                const profile = nextProps.profile.profile;
 
+                profile.location = !isEmpty(profile.location) ? profile.location : '';
+                profile.ecPosition = !isEmpty(profile.ecPosition) ? profile.ecPosition : '';
+                profile.ecPositionDetail = !isEmpty(profile.ecPositionDetail) ? profile.ecPositionDetail : '';
+                profile.alreadyCompleted = !isEmpty(profile.alreadyCompleted) ? profile.alreadyCompleted : '';
+
+                
+                profile.social = !isEmpty(profile.social) ? profile.social : {};
+                profile.twitter = !isEmpty(profile.social.twitter) ? profile.social.twitter : '';
+                profile.youtube = !isEmpty(profile.social.youtube) ? profile.social.youtube : '';
+                profile.facebook = !isEmpty(profile.social.facebook) ? profile.social.facebook : '';
+                profile.linkedin = !isEmpty(profile.social.linkedin) ? profile.social.linkedin : '';
+                profile.instagram = !isEmpty(profile.social.instagram) ? profile.social.instagram : '';
+                
+
+                 // Set component fields state
+                 
+        this.setState ({
+            displaySocialInputs : !isEmpty(profile.social),
+            handle: profile.handle, 
+            club:  profile.club, 
+            location: profile.location, 
+            work: profile.work,
+            ecPosition: profile.ecPosition, 
+            ecPositionDetail: profile.ecPositionDetail, 
+            alreadyCompleted: profile.alreadyCompleted, 
+            numberOfSpeechesGiven: profile.numberOfSpeechesGiven,
+            about: profile.about, 
+            youtube: profile.youtube,
+            linkedin: profile.linkedin,
+            facebook: profile.facebook,
+            instagram: profile.instagram,
+            twitter: profile.twitter,
+            speechInterests: profile.speechInterests, 
+            competitionsParticipatedIn: profile.competitionsParticipatedIn, 
+            errors : {},
+        });
+
+            }
+    }
     render() {
 
         const {errors, displaySocialInputs} = this.state;
@@ -133,8 +179,6 @@ class CreateProfile extends Component {
 
         } 
 
-
-        
         const options = [
             {
                 label: '* Select Speech Interests', value: 0
@@ -166,7 +210,8 @@ class CreateProfile extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Create Your Profile</h1>
+                        <Link to="/dashboard" className="btn btn-light">Go Back</Link>
+                            <h1 className="display-4 text-center">Edit Your Profile</h1>
                             <p className="lead text-center">
                                 Let's get some information to make your profile stand out!
                                 </p>
@@ -276,7 +321,9 @@ class CreateProfile extends Component {
     }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
+    getCurrentProfile: PropTypes.func.isRequired,
+    createProfile: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
     errors : PropTypes.object.isRequired
 
@@ -287,4 +334,4 @@ const mapStateToProps =(state) =>  ({
 
 });
 
-export default connect(mapStateToProps, {createProfile})(withRouter(CreateProfile));
+export default connect(mapStateToProps, {createProfile, getCurrentProfile})(withRouter(EditProfile));

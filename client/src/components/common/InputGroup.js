@@ -8,8 +8,7 @@ const InputGroup = ({
     value,
     error,
     icon,
-    type,
-    info,
+    type, 
     onChange,
 
 }) => {
@@ -20,7 +19,7 @@ const InputGroup = ({
                 <i className={icon} />
             </span>
             </div>
-        <textarea
+        <input
            value={value}
            onChange={onChange}
            type={type}

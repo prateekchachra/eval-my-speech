@@ -22,7 +22,7 @@ module.exports = function validateProfileInput(data){
 
     }
     if(Validator.isEmpty(data.about)){
-        errors.password = 'About field is required.';
+        errors.about = 'About field is required.';
 
     }
     if(!isEmpty(data.youtube)){

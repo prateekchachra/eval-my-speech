@@ -16,10 +16,15 @@ import Login from './components/auth/Login';
 import PrivateRoute from './components/common/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/edit-profile/EditProfile';
+import AddSpeeches from './components/add-speeches/AddSpeeches';
+import Profiles from './components/profiles/Profiles';
+import AddEvaluations from './components/add-speeches/AddEvaluations';
 
 
 import store from './store';
 import './App.css';
+
 
 
 
@@ -61,11 +66,21 @@ class App extends Component {
       <div className="container">
         <Route exact path="/register" component={Register}></Route>
         <Route exact path="/login" component={Login}></Route>
+        <Route exact path="/profiles" component={Profiles}></Route>
         <Switch>
         <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
         </Switch>
         <Switch>
         <PrivateRoute exact path="/create-profile" component={CreateProfile}></PrivateRoute>
+        </Switch>
+        <Switch>
+        <PrivateRoute exact path="/add-speeches" component={AddSpeeches}></PrivateRoute>
+        </Switch>
+        <Switch>
+        <PrivateRoute exact path="/add-evaluations" component={AddEvaluations}></PrivateRoute>
+        </Switch>
+        <Switch>
+        <PrivateRoute exact path="/edit-profile" component={EditProfile}></PrivateRoute>
         </Switch>
       </div>
       <Footer />

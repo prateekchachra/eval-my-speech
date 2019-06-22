@@ -10,10 +10,10 @@ const SelectListGroup = ({
     onChange,
     options 
 
-}) => {
+}) => { 
     const selectOptions = options.map(option =>(
-        <option key={option.label} value={option.value}>
-            {option}
+     <option key={option.label} value={option.value}>
+            {option.label}
         </option>
     ) );
     return(

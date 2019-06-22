@@ -21,7 +21,7 @@ import {clearCurrentProfile} from '../../actions/profileActions';
       const authLinks = (
 
         <ul className="navbar-nav ml-auto">
-          
+           <Link className="nav-link" to="/dashboard">Dashboard</Link>
         
            <li> <img className= "rounded-circle" src={user.avatar} alt={user.name} style={{width: 25, marginRight: 5}} title="You must have a gravatar connected to 
             your email to display an image"/> 
