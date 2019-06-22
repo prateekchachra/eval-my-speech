@@ -15,7 +15,7 @@ ADD_POST,
 
 export const addPost = postData => dispatch => {
     dispatch(clearErrors());
-    axios.post('http://localhost:5000/api/posts',postData)
+    axios.post('/api/posts',postData)
     .then(res => 
         dispatch({
             type: ADD_POST,
@@ -32,7 +32,7 @@ export const addPost = postData => dispatch => {
 
 export const addCommendation = (postId, comData) => dispatch => {
     dispatch(clearErrors());
-    axios.post(`http://localhost:5000/api/posts/com/${postId}`,comData)
+    axios.post(`/api/posts/com/${postId}`,comData)
     .then(res => 
         dispatch({
             type: GET_POST,
@@ -46,7 +46,7 @@ export const addCommendation = (postId, comData) => dispatch => {
 
 }
 export const deleteCommendation = (postId, comId) => dispatch => {
-    axios.delete(`http://localhost:5000/api/posts/com/${postId}/${comId}` )
+    axios.delete(`/api/posts/com/${postId}/${comId}` )
     .then(res => 
         dispatch({
             type: GET_POST,
@@ -62,7 +62,7 @@ export const deleteCommendation = (postId, comId) => dispatch => {
 
 // Delete Post
 export const deletePost = id => dispatch => {
-    axios.delete(`http://localhost:5000/api/posts/${id}`,id)
+    axios.delete(`/api/posts/${id}`,id)
     .then(res => 
         dispatch({  
             type: DELETE_POST,
@@ -77,7 +77,7 @@ export const deletePost = id => dispatch => {
 }
 // Add like
 export const addLike = id => dispatch => {
-    axios.post(`http://localhost:5000/api/posts/like/${id}`,id)
+    axios.post(`/api/posts/like/${id}`,id)
     .then(res => 
         dispatch(getPosts()))
         .catch(err => dispatch({
@@ -89,7 +89,7 @@ export const addLike = id => dispatch => {
 }
 // Remove like
 export const removeLike = id => dispatch => {
-    axios.post(`http://localhost:5000/api/posts/unlike/${id}`,id)
+    axios.post(`/api/posts/unlike/${id}`,id)
     .then(res => 
         dispatch(getPosts()))
         .catch(err => dispatch({
@@ -102,7 +102,7 @@ export const removeLike = id => dispatch => {
 
 // Get Posts
 export const getPosts = () => dispatch => {
-    axios.get('http://localhost:5000/api/posts')
+    axios.get('/api/posts')
     .then(res => 
         dispatch({
             type: GET_POSTS,
@@ -117,7 +117,7 @@ export const getPosts = () => dispatch => {
 }
 // Get Post
 export const getPost = (id) => dispatch => {
-    axios.get(`http://localhost:5000/api/posts/${id}`)
+    axios.get(`/api/posts/${id}`)
     .then(res => 
         dispatch({
             type: GET_POST,

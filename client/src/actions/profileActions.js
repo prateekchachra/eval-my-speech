@@ -7,7 +7,7 @@ import {GET_PROFILE, PROFILE_LOADING, GET_ERRORS, CLEAR_CURRENT_PROFILE, SET_CUR
 
 export const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
-    axios.get('http://localhost:5000/api/profile')
+    axios.get('/api/profile')
     .then(res => 
         dispatch({
             type: GET_PROFILE,
@@ -27,7 +27,7 @@ export const getCurrentProfile = () => dispatch => {
 
 export const getProfileByHandle = (handle) => dispatch => {
     dispatch(setProfileLoading());
-    axios.get(`http://localhost:5000/api/profile/handle/${handle}`)
+    axios.get(`/api/profile/handle/${handle}`)
     .then(res => 
         dispatch({
             type: GET_PROFILE,
@@ -46,7 +46,7 @@ export const getProfileByHandle = (handle) => dispatch => {
 
 export const addSpeeches = (speechData, history) => dispatch => {
 
-    axios.post('http://localhost:5000/api/profile/speeches', speechData)
+    axios.post('/api/profile/speeches', speechData)
     .then(res => history.push('/dashboard'))
     .catch(err => {
         if(err.response){
@@ -64,7 +64,7 @@ export const addSpeeches = (speechData, history) => dispatch => {
 //Delete Speech
 export const deleteSpeech = (id) => dispatch => {
 
-    axios.delete(`http://localhost:5000/api/profile/speeches/${id}`)
+    axios.delete(`/api/profile/speeches/${id}`)
     .then(res => dispatch({
         type: GET_PROFILE,
         payload: res.data
@@ -87,7 +87,7 @@ export const deleteSpeech = (id) => dispatch => {
 //Get all profiles
 export const getProfiles = () => dispatch => {
     dispatch(setProfileLoading());
-    axios.get('http://localhost:5000/api/profile/all')
+    axios.get('/api/profile/all')
     .then(res => dispatch({
         type: GET_PROFILES,
         payload: res.data
@@ -109,7 +109,7 @@ export const getProfiles = () => dispatch => {
 //Delete Evaluation
 export const deleteEvaluation = (id) => dispatch => {
 
-    axios.delete(`http://localhost:5000/api/profile/evaluations/${id}`)
+    axios.delete(`/api/profile/evaluations/${id}`)
     .then(res => dispatch({
         type: GET_PROFILE,
         payload: res.data
@@ -130,7 +130,7 @@ export const deleteEvaluation = (id) => dispatch => {
 
 export const addEvaluations = (evalData, history) => dispatch => {
 
-    axios.post('http://localhost:5000/api/profile/evaluations', evalData)
+    axios.post('/api/profile/evaluations', evalData)
     .then(res => history.push('/dashboard'))
     .catch(err => {
         if(err.response){
@@ -181,7 +181,7 @@ export const deleteAccount = () => dispatch => {
 //Create Profile
 
 export const createProfile = (profileData, history) => dispatch => {
-axios.post('http://localhost:5000/api/profile', profileData)
+axios.post('/api/profile', profileData)
 .then(res => history.push('/dashboard'))
 .catch(err => {
     if(err.response){
