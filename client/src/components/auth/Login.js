@@ -59,7 +59,7 @@ import TextFieldGroupInput from '../common/TextFieldGroupInput';
               <div className="row">
                 <div className="col-md-8 m-auto">
                   <h1 className="display-4 text-center">Log In</h1>
-                  <p className="lead text-center">Sign in to your DevConnector account</p>
+                  <p className="lead text-center">Sign in to your Evaluate My Speech account</p>
                   <form onSubmit={this.onSubmit.bind(this)}>
                       <TextFieldGroupInput 
                        placeholder="Email Address" name="email"
