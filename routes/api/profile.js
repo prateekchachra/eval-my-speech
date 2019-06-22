@@ -65,8 +65,8 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res)=>{
     if(req.body.alreadyCompleted) profileFields.alreadyCompleted = req.body.alreadyCompleted;
     if(req.body.numberOfSpeechesGiven) profileFields.numberOfSpeechesGiven = req.body.numberOfSpeechesGiven;
     if(typeof req.body.speechInterests !== 'undefined'){
-        profileFields.speechInterests = req.body.speechInterests.split(',');
-    }
+        profileFields.speechInterests = req.body.speechInterests;   
+     }
 
     if(typeof req.body.competitionsParticipatedIn !== 'undefined'){
         profileFields.competitionsParticipatedIn = req.body.competitionsParticipatedIn;

@@ -20,8 +20,10 @@ import EditProfile from './components/edit-profile/EditProfile';
 import AddSpeeches from './components/add-speeches/AddSpeeches';
 import Profiles from './components/profiles/Profiles';
 import AddEvaluations from './components/add-speeches/AddEvaluations';
-
-
+import Profile from './components/profile/Profile';
+import NotFound from './components/not-found/NotFound';
+import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 import store from './store';
 import './App.css';
 
@@ -65,8 +67,13 @@ class App extends Component {
       <Route exact path="/" component={Landing}></Route>
       <div className="container">
         <Route exact path="/register" component={Register}></Route>
+        <Route exact path="/not-found" component={NotFound}></Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/profiles" component={Profiles}></Route>
+        <Route exact path="/profile/:handle" component={Profile}></Route>
+        <Switch>
+        <PrivateRoute exact path="/post/:id" component={Post}></PrivateRoute>
+        </Switch>
         <Switch>
         <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
         </Switch>
@@ -81,6 +88,9 @@ class App extends Component {
         </Switch>
         <Switch>
         <PrivateRoute exact path="/edit-profile" component={EditProfile}></PrivateRoute>
+        </Switch>
+        <Switch>
+        <PrivateRoute exact path="/feed" component={Posts}></PrivateRoute>
         </Switch>
       </div>
       <Footer />

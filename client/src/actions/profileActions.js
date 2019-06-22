@@ -21,6 +21,29 @@ export const getCurrentProfile = () => dispatch => {
         );
 };
 
+
+
+//Get profile by handle
+
+export const getProfileByHandle = (handle) => dispatch => {
+    dispatch(setProfileLoading());
+    axios.get(`http://localhost:5000/api/profile/handle/${handle}`)
+    .then(res => 
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+    ).catch(err => 
+        dispatch({
+            type: GET_PROFILE,
+            payload: null
+        })
+        );
+};
+
+
+
+
 export const addSpeeches = (speechData, history) => dispatch => {
 
     axios.post('http://localhost:5000/api/profile/speeches', speechData)
@@ -74,7 +97,7 @@ export const getProfiles = () => dispatch => {
             dispatch(
         {
         type: GET_PROFILES,
-        payload: {}
+        payload: null
     
         })}
         else{
