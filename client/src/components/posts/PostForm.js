@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import TextFieldGroupInput from '../common/TextFieldGroupInput';
 import {addPost} from '../../actions/postActions';
 
 
@@ -11,6 +12,8 @@ class PostForm extends Component {
         super(props);
         this.state = {
             text: '',
+            youtubeLink: '',
+            speechBody: '',
             errors: {}
         }
 
@@ -24,11 +27,14 @@ class PostForm extends Component {
         const {user} = this.props.auth; 
         const newPost = {
             text: this.state.text,
+            youtubeLink : this.state.youtubeLink,
             name: user.name,
-            avatar: user.avatar
+            avatar: user.avatar,
+            speechBody: this.state.speechBody
+            
         }
        this.props.addPost(newPost);
-        this.setState({text: ''});
+        this.setState({text: '', youtubeLink: '', speechBody: ''});
     }
 
     onChange(e){
@@ -41,6 +47,7 @@ class PostForm extends Component {
         }
 
     }
+    
 
     render() {
         const {errors} = this.state;
@@ -53,9 +60,22 @@ class PostForm extends Component {
               <div className="card-body">
                 <form onSubmit = {this.onSubmit.bind(this)}>
                   <div className="form-group">
-                   
+                  <TextFieldGroupInput 
+                       placeholder="Youtube Video Link(Optional)" name="youtubeLink"
+                       value={this.state.youtubeLink}
+                        onChange={this.onChange}
+                        error ={errors.youtubeLink}
+                      />
+                      <TextAreaFieldGroup
+                   placeholder="Body of your speech"
+                   name="speechBody"
+                   value={this.state.speechBody}
+                   onChange={this.onChange}
+                   error={errors.speechBody}
+                   ></TextAreaFieldGroup>
+
                    <TextAreaFieldGroup
-                   placeholder="Create a post"
+                   placeholder="Ask anything!"
                    name="text"
                    value={this.state.text}
                    onChange={this.onChange}

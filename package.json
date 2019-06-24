@@ -4,7 +4,6 @@
   "description": "Social network for public speaking enthusiasts",
   "main": "server.js",
   "scripts": {
-    
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon serverjs",
@@ -24,6 +23,7 @@
     "mongoose": "^5.6.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "react-youtube": "^7.9.0",
     "validator": "^11.0.0"
   },
   "devDependencies": {

@@ -11,6 +11,10 @@ export const GET_POST = 'GET_POST';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 
+//For speech/evaluation
+export const GET_SPEECH = 'GET_SPEECH';
+export const GET_EVALUATION = 'GET_EVALUATION';
+
 
 export const PROFILE_LOADING = 'PROFILE_LOADING';
 export const PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND';

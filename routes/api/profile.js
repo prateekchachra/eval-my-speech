@@ -9,9 +9,9 @@ const validateProfileInput = require('../../validation/profile');
 const validateSpeechGivenInput = require('../../validation/speeches');
 // Load profile model
 
-
+const {Speech} = require('../../models/Speech');
+const {Evaluation} = require('../../models/Evaluation');
 const Profile = require('../../models/Profile');
-
 // Load user model
 
 const User = require('../../models/User');
@@ -131,6 +131,41 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res)=>{
     });
 
       
+    // @route GET Speech
+// @desc Get speech details of user by id.
+// @access Private
+
+router.get('/speeches/:id', passport.authenticate('jwt', {session: false}), (req, res)=>{
+    const errors = {};
+Speech.findOne({ speech: req.params.id})
+.then(speech => {
+    if(!speech){
+        errors.noprofile = 'There is no speech for this id';
+        return res.status(404).json(errors);
+    }
+    res.json(speech);
+}).catch(err => res.status(400).json(err));
+
+});
+
+     
+    // @route GET Evaluation
+// @desc Get evaluation details of user by id.
+// @access Private
+
+router.get('/evaluation/:id', passport.authenticate('jwt', {session: false}), (req, res)=>{
+    const errors = {};
+Evaluation.findOne({ evaluation: req.params.id})
+.then(evaluation => {
+    if(!evaluation){
+        errors.noprofile = 'There is no evaluation for this id';
+        return res.status(404).json(errors);
+    }
+    res.json(evaluation);
+}).catch(err => res.status(400).json(err));
+
+});
+
     // @route POST api/profile/speeches
     // @desc Add speech to profile
     // @access Public

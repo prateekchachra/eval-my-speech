@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
- 
+ import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
 
 
@@ -15,14 +15,7 @@ class ProfileCreds extends Component {
                 <p>
                     <Moment format="DD/MM/YYYY">{speech.date}</Moment>
                 </p>
-              Description : 
-                <p>
-                    {speech.description}
-                </p>
-                Speech material: 
-                <p> 
-                    {speech.speechBody}
-                </p>
+                <Link to={`/speech/${speech._id}`} className="btn btn-info" >View</Link>
               
 
             </li>
@@ -35,14 +28,7 @@ class ProfileCreds extends Component {
                 <p>
                     <Moment format="DD/MM/YYYY">{evn.date}</Moment>
                 </p>
-              Description : 
-                <p>
-                    {evn.description}
-                </p>
-                Evaluation body: 
-                <p> 
-                    {evn.evaluationBody}
-                </p>
+                <Link to={`/evaluation/${evn._id}`} className="btn btn-info" >View</Link>
               
 
             </li>

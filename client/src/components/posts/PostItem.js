@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import YouTube from 'react-youtube';
 import {deletePost, addLike, removeLike} from '../../actions/postActions';
 
 
@@ -31,22 +32,49 @@ class PostItem extends Component {
     }
     render() {
 
-
+      let youtubeEmbedItem, speechBodyItem;
 
         const {post, auth, showActions} = this.props;
+
+        if(post.youtubeLink){
+
+          var videoId = post.youtubeLink.split('=')[1];
+          console.log(videoId);
+          
+        
+          var sanitizedId = videoId.includes('&') ? videoId.split('&')[0] : videoId;
+          console.log(sanitizedId);
+          console.log(videoId.includes('&'));
+          if(sanitizedId)
+              youtubeEmbedItem = <YouTube videoId={sanitizedId} id={post._id + '_youtubeVid'}/>;
+            else
+             youtubeEmbedItem = (<span></span>);
+        }
+        else 
+          youtubeEmbedItem = (<span></span>);
+
+        if(post.speechBody){
+          speechBodyItem=(<p>{post.speechBody}</p>);
+
+        }
+        else
+        speechBodyItem = (<div></div>);
         return (
             <div className="card card-body mb-3">
               <div className="row">
                 <div className="col-md-2">
-                  <a href="profile.html">
+                  <Link to="profile.html"> 
                     <img className="rounded-circle d-none d-md-block" src={post.avatar}
                       alt="" />
-                  </a>
+                  </Link>
                   <br />
+                  
                   <p className="text-center">{post.name}</p>
                 </div>
                 <div className="col-md-10">
                   <p className="lead">{post.text}</p>
+                  {youtubeEmbedItem}
+                  {speechBodyItem}
                   {showActions ? (<span>
                     <button type="button" onClick={this.onLikeClick.bind(this, post._id)} className="btn btn-light mr-1">
                     <i className={classnames("fas fa-thumbs-up", {'text-info': this.findUserLike(post.likes)})}></i>

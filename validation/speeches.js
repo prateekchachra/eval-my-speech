@@ -9,7 +9,7 @@ module.exports = function validateLoginInput(data){
      data.club = !isEmpty(data.club) ? data.club : '';
      data.description = !isEmpty(data.description) ? data.description : '';
      data.date = !isEmpty(data.date) ? data.date : '';
-
+    data.youtubeLink = !isEmpty(data.youtubeLink) ? data.youtubeLink : '';
 
     
     if(Validator.isEmpty(data.titleOfSpeech)){
@@ -17,13 +17,22 @@ module.exports = function validateLoginInput(data){
 
     }
     
-    if(Validator.isEmpty(data.speechType)){
-        errors.speechType = 'Type of speech is required.';
+    if(Validator.isEmpty(data.description)){
+        errors.description = 'Description of the speech is required.';
 
     }
     if(Validator.isEmpty(data.club)){
         errors.club = 'Club field is required.';
 
+    }
+    if(!Validator.isEmpty(data.youtubeLink)){
+       if(!Validator.isURL(data.youtubeLink)) {
+           errors.youtubeLink = 'Not a valid Link';
+
+           if(!Validator.contains(data.youtubeLink, 'youtube')){
+            errors.youtubeLink = 'Not a valid Youtube link, please check';
+           }
+    }
     }
     if(Validator.isEmpty(data.date)){
         errors.date = 'Date of speech is required.';

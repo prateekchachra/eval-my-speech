@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const {SpeechSchema} = require('./Speech');
+const {EvaluationSchema} = require('./Evaluation');
+
+
 const ProfileSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -47,69 +51,8 @@ const ProfileSchema = new Schema({
         required: true
 
     },
-    speechesGiven: [
-        {
-            titleOfSpeech: {
-                type:String,
-            required: true,
-            },
-            speechType: {
-                type: String,
-                required: true
-            },
-            
-            club: {
-                type: String,
-                required: true
-            },
-            date: {
-                type: Date,
-                required: true
-            },
-            description: {
-                type: String,
-                required: true
-
-            },
-            challenges: {
-                type: String
-            },
-            speechBody: {
-                type: String
-            },
-    }
-    ],
-    speechesEvaluated: [
-        {
-            titleOfSpeech: {
-                type:String,
-            required: true,
-            },
-            speechType: {
-                type: String,
-                required: true
-            },
-            
-            club: {
-                type: String,
-                required: true
-            },
-            date: {
-                type: Date,
-                required: true
-            },
-            description: {
-                type: String
-
-            },
-            challenges: {
-                type: String
-            },
-            evaluationBody: {
-                type: String
-            },
-    },
-    ],
+    speechesGiven: [SpeechSchema],
+    speechesEvaluated: [EvaluationSchema],
     social: {
         youtube: {
             type: String

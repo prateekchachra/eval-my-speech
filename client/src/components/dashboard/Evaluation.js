@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+import {Link} from 'react-router-dom';
 import {deleteEvaluation} from '../../actions/profileActions';
 
 
@@ -20,9 +21,7 @@ class Evaluation extends Component {
               <td>  {evn.speechType} </td>
               <td>  {evn.club} </td>
               <td> <Moment format="DD/MM/YYYY">{evn.date}</Moment> </td>
-              <td>  {evn.description} </td>
-              <td>  {evn.challenges} </td>
-              <td>   {evn.evaluationBody} </td>
+              <td>  <Link to={`/evaluation/${evn._id}`} className="btn btn-info" >View</Link></td>
               <td><button onClick={this.onDeleteClick.bind(this, evn._id)} className="btn btn-danger">Delete</button></td>
             </tr>
 
@@ -37,13 +36,13 @@ class Evaluation extends Component {
                    <th>Type of Speech</th>
                    <th>Club</th>
                    <th>Date</th>
-                   <th>Description of the evaluation</th>
-                   <th>Challenges faced</th>
-                   <th>Evaluation Body</th>
+                   <th/>
+                   <th/>
                 </tr>
 
                 </thead>
-                    {evaluations}
+                   
+                    <tbody> {evaluations}</tbody>
                 </table>
             </div>
         )

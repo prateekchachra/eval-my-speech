@@ -23,6 +23,7 @@ class AddSpeeches extends Component {
             description: '',
             challenges: '',
             speechBody: '',
+            youtubeLink: '',
             errors: {}    
         }
 
@@ -41,6 +42,7 @@ class AddSpeeches extends Component {
                 description: this.state.description,
                 challenges: this.state.challenges,
                 speechBody: this.state.speechBody,
+                youtubeLink: this.state.youtubeLink
             };
             this.props.addSpeeches(speechData, this.props.history);
 
@@ -98,7 +100,7 @@ class AddSpeeches extends Component {
                         <small className="d-block pb-3">* = required fields</small>
                         <form onSubmit={this.onSubmit.bind(this)}  >
                         <TextFieldGroupInput
-                            placeholder="Speech Title"
+                            placeholder="* Speech Title"
                             name="titleOfSpeech"
                             value={this.state.titleOfSpeech}
                             onChange={this.onChange}
@@ -106,12 +108,20 @@ class AddSpeeches extends Component {
                             info="Enter the title of the speech you gave"
                             ></TextFieldGroupInput>
                         <TextFieldGroupInput
-                            placeholder="Club Name"
+                            placeholder="* Club Name"
                             name="club"
                             value={this.state.club}
                             onChange={this.onChange}
                             error={errors.club}
                             info="Which club did you give the speech in?"
+                            ></TextFieldGroupInput>
+                            <TextFieldGroupInput
+                            name="youtubeLink"
+                            placeholder="www.youtube.com/[your-video]"
+                            value={this.state.youtubeLink}
+                            onChange={this.onChange}
+                            error={errors.youtubeLink}
+                            info="If you have added the link on YouTube, please link the URL here"
                             ></TextFieldGroupInput>
                             <h6>Date</h6>
                         <TextFieldGroupInput
@@ -139,7 +149,7 @@ class AddSpeeches extends Component {
                               info="The body/writeup for the speech"
                             ></TextAreaFieldGroup>
                               <TextAreaFieldGroup
-                              placeholder="Description of the Speech"
+                              placeholder="* Description of the Speech"
                               name="description"
                               value={this.state.description}
                               onChange={this.onChange}

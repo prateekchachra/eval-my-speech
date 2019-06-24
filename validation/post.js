@@ -19,6 +19,10 @@ module.exports = function validateLoginInput(data){
             errors.youtubeLink = 'Not a valid URL';
 
         }
+        if(!data.youtubeLink.includes('youtube')){
+            errors.youtubeLink = 'Please enter a valid youtube URL';
+        }
+        
     }
     if(!isEmpty(data.speechBody)){
         if(!Validator.isLength(data.speechBody, {min: 100})){

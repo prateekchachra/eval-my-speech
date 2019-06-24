@@ -2,11 +2,15 @@ import {GET_ERRORS, SET_CURRENT_USER} from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
+
 // Register User
 
+var ip = "http://localhost:5000";
 export const registerUser = (userData, history) => dispatch => {
 
-    axios.post('/api/users/register'
+
+
+    axios.post(ip + '/api/users/register'
     ,userData).then(response => {
         history.push('/login');
     }).catch(err =>{
@@ -27,7 +31,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 
 export const loginUser = (userData) => dispatch => {
-    axios.post('/api/users/login',
+    axios.post(ip + '/api/users/login',
         userData)
     .then(response => {
              

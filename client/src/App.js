@@ -23,6 +23,9 @@ import AddEvaluations from './components/add-speeches/AddEvaluations';
 import Profile from './components/profile/Profile';
 import NotFound from './components/not-found/NotFound';
 import Posts from './components/posts/Posts';
+
+import EvaluationItem from './components/dashboard/EvaluationItem';
+import SpeechItem from './components/dashboard/SpeechItem';
 import Post from './components/post/Post';
 import store from './store';
 import './App.css';
@@ -71,9 +74,21 @@ class App extends Component {
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/profiles" component={Profiles}></Route>
         <Route exact path="/profile/:handle" component={Profile}></Route>
+        
+        
+        
         <Switch>
         <PrivateRoute exact path="/post/:id" component={Post}></PrivateRoute>
         </Switch>
+
+
+        <Switch>
+        <PrivateRoute exact path="/speech/:id" component={SpeechItem}></PrivateRoute>
+        </Switch>
+        <Switch>
+        <PrivateRoute exact path="/evaluation/:id" component={EvaluationItem}></PrivateRoute>
+        </Switch>
+
         <Switch>
         <PrivateRoute exact path="/dashboard" component={Dashboard}></PrivateRoute>
         </Switch>

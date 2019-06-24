@@ -37,3 +37,14 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.navbar{
+  background: -webkit-linear-gradient(rgb(14, 60, 119),rgb(19, 110, 230) );
+
+}   
+
+footer{
+  background: -webkit-linear-gradient(rgb(14, 60, 119),rgb(19, 110, 230)); 
+  padding: 10px;
+  padding-bottom: 20px;
+}
