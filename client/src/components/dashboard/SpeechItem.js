@@ -24,8 +24,7 @@ class SpeechItem extends Component {
     render() {
         let speechContent;
 
-        const {speech, loading} = this.props; 
-
+        const {speech, loading} = this.props.profile; 
         if(speech === undefined)
         {
 
@@ -37,14 +36,15 @@ class SpeechItem extends Component {
 
         }
         else {
+            console.log(speech.youtubeLink);
 
         speechContent = (    <div>
              <h4 className="mb-2">  Title: {speech.titleOfSpeech} </h4>
-                
+            
         <p style={{float: 'right'}}>  {speech.speechType} </p>
         <p className = "lead text-muted">  {speech.club} </p>
         <p  style={{float: 'right'}}> <Moment format="DD/MM/YYYY">{speech.date}</Moment> </p>
-        {!isEmpty(speech.youtubeLink) ? (<YouTube videoId={speech.youtubeLink.split('=')[0]} />) : (<span></span>)}
+        {!isEmpty(speech.youtubeLink) ? (<YouTube videoId={speech.youtubeLink.split('=')[1]} />) : (<span></span>)}
         <pre style={{marginTop: 20}}> <p  className = "lead text-muted">{speech.description}</p></pre>
         <pre><p  className = "lead text-muted">{speech.speechBody}</p></pre>
         <pre><p className = "lead text-muted">  {speech.challenges} </p></pre>
@@ -72,7 +72,7 @@ SpeechItem.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    speech: state.speech,
+    profile: state.profile,
 });
 
 export default connect(mapStateToProps, {getSpeech, deleteSpeech})(SpeechItem);

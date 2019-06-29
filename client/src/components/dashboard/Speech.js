@@ -14,13 +14,16 @@ class Speech extends Component {
     }
 
     render() {
+
+        
         const speeches = this.props.speeches.map(sp => (
             <tr key = {sp._id}>
               <td>  {sp.titleOfSpeech} </td>
-              <td>  {sp.speechType} </td>
+              <td>  {sp.speechTags.map(tag => <p>{tag}</p>)} </td>
               <td>  {sp.club} </td>
               <td> <Moment format="DD/MM/YYYY">{sp.date}</Moment> </td>
-            <td>  <Link to={`/speech/${sp._id}`} className="btn btn-info" >View</Link></td>
+            <td>  <Link to={`/speech/${sp._id}`} className="btn btn-success" >View</Link></td>
+            <td>  <Link to={`/speech/${sp._id}`} className="btn btn-info" >Edit</Link></td>
               <td><button onClick={this.onDeleteClick.bind(this, sp._id)} className="btn btn-danger">Delete</button></td>
             </tr>
 
@@ -32,9 +35,9 @@ class Speech extends Component {
             <h4 className="mb-2">Speeches</h4>
             <table className="table" >
             <thead>
-            <tr>
+            <tr>    
                <th>Title</th>
-               <th>Type of Speech</th>
+               <th>Tags</th>
                <th>Club</th>
                <th>Date</th>
                <th/>

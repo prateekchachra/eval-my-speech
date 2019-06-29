@@ -11,7 +11,7 @@ class ProfileCreds extends Component {
         const speechItems = speeches.map((speech) => (
             <li key={speech._id} className="list-group-item">
                 <h4>{speech.titleOfSpeech}, given in {speech.club}</h4>
-                <h5>Type: {speech.speechType}</h5>
+                <h5>Tags: {speech.speechTags.map(tag => <span>{tag} ,</span>)}</h5>
                 <p>
                     <Moment format="DD/MM/YYYY">{speech.date}</Moment>
                 </p>

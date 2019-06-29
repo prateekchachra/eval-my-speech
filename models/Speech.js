@@ -11,10 +11,10 @@ const SpeechSchema = new Schema({
             type:String,
         required: true,
         },
-        speechType: {
+        speechTags: [{
             type: String,
             required: true
-        },
+        }],
         
         club: {
             type: String,
@@ -24,7 +24,7 @@ const SpeechSchema = new Schema({
             type: Date,
             required: true
         },
-        description: {
+        description: { 
             type: String,
             required: true
 

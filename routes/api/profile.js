@@ -137,7 +137,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res)=>{
 
 router.get('/speeches/:id', passport.authenticate('jwt', {session: false}), (req, res)=>{
     const errors = {};
-Speech.findOne({ speech: req.params.id})
+Speech.findOne({ _id: req.params.id})
 .then(speech => {
     if(!speech){
         errors.noprofile = 'There is no speech for this id';
@@ -179,23 +179,25 @@ Evaluation.findOne({ evaluation: req.params.id})
 
         Profile.findOne({user : req.user.id})
         .then(profile => {
-            const newSpeech = {
+            const newSpeech = new Speech({
                 titleOfSpeech: req.body.titleOfSpeech,
-                speechType: req.body.speechType,
+                speechTags: req.body.speechTags,
                 club: req.body.club,
                 date: req.body.date,
                 description: req.body.description,
                 challenges: req.body.challenges,
                 speechBody: req.body.speechBody, 
-
-            }
+                youtubeLink: req.body.youtubeLink, 
+                profile: profile._id,
+            });
 
        
         profile.speechesGiven.unshift(newSpeech);
+            newSpeech.save().then(
         profile.save().then(profile => {
 
             res.json(profile);
-        });
+        }));
     });
     });
       // @route POST api/profile/evaluations

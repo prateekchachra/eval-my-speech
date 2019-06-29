@@ -1,30 +1,57 @@
 import React, { Component } from 'react'
 import {Link, withRouter} from 'react-router-dom';
- import TextFieldGroupInput from '../common/TextFieldGroupInput'
- import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
- import SelectListGroup from '../common/SelectListGroup';
+import TagsInput from 'react-tagsinput';
+import Autosuggest from 'react-autosuggest';
+import './tagsInputStyling.css';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+
+import * as _ from 'lodash';
+ import TextFieldGroupInput from '../common/TextFieldGroupInput'
+ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+ 
 import {addSpeeches } from '../../actions/profileActions';
 
 
 
+const options = [
+    {
+        name: 'Comedy/Humorous', value: 'Comedy/Humorous'
+    }, 
+    {
+        name: 'Informational', value: 'Informational'
+    }, 
+    {
+        name: 'Inspirational', value: 'Inspirational'
+    }, 
+    {
+        name: 'Entertaining', value: 'Entertaining'
+    }, 
+    {
+        name: 'Storytelling', value: 'Storytelling'
+    }, 
+    {
+        name: 'Poetry', value: 'Poetry'
+    }, 
 
+];
 class AddSpeeches extends Component {
 
+    
+    
     constructor(props){
 
         super(props);
         this.state= {
             titleOfSpeech: '',
-            speechType: '',
+            speechType: [],
             club: '',
             date: '',
             description: '',
             challenges: '',
             speechBody: '',
             youtubeLink: '',
-            errors: {}    
+            errors: {}, 
         }
 
         this.onChange = this.onChange.bind(this);
@@ -58,35 +85,52 @@ class AddSpeeches extends Component {
 
 
         }
-    render() {
 
-        const {errors} = this.state;
-        const options = [
-            {
-                label: '* Select Speech Interests', value: 0
-            }, 
-            {
-                label: 'Comedy/Humorous', value: 'Comedy/Humorous'
-            }, 
-            {
-                label: 'Informational', value: 'Informational'
-            }, 
-            {
-                label: 'Inspirational', value: 'Inspirational'
-            }, 
-            {
-                label: 'Entertaining', value: 'Entertaining'
-            }, 
-            {
-                label: 'Storytelling', value: 'Storytelling'
-            }, 
-            {
-                label: 'Poetry', value: 'Poetry'
-            }, 
-            {
-                label: 'Other', value: 'Other'
+        
+  handleSTChange = (value) => {
+    this.setState({
+        speechType: value
+    })
+  };
+
+  
+
+
+    render() {
+        function autocompleteRenderInput ({addTag, ...props}) {
+            const handleOnChange = (e, {newValue, method}) => {
+              if (method === 'enter') {
+                e.preventDefault()
+              } else {
+                props.onChange(e)
+              }
             }
-        ];
+
+            const inputValue = (props.value && props.value.trim().toLowerCase()) || ''
+            const inputLength = inputValue.length
+      
+            let suggestions = options.filter((type) => {
+              return type.name.toLowerCase().slice(0, inputLength) === inputValue
+            })
+      
+            return (
+
+              <Autosuggest
+                ref={props.ref}
+                suggestions={suggestions}
+                shouldRenderSuggestions={(value) => value && value.trim().length > 0}
+                getSuggestionValue={(suggestion) => suggestion.name}
+                renderSuggestion={(suggestion) => <span>{suggestion.name}</span>}
+                inputProps={{...props, onChange: handleOnChange}}
+                onSuggestionSelected={(e, {suggestion}) => {
+                  addTag(suggestion.name)
+                }}
+                onSuggestionsClearRequested={() => {}}
+                onSuggestionsFetchRequested={() => {}}
+              />
+            )
+      }
+        const {errors} = this.state;
         return (
             <div className="add-speeches">
                 <div className="container">
@@ -94,7 +138,7 @@ class AddSpeeches extends Component {
                         <div className="col-md-8 m-auto">
 
                         <Link to="/dashboard" className="btn btn-light">Go Back</Link>
-                        <h1 className="display-4 text-center">Add Any Speeches You Have Given</h1>
+                        <h1 className="display-3 text-center">Add Any Speeches You Have Given</h1>
                         <p className="lead text-center">Add any speeches you might have given in the past.
                         This will help the new joinees a lot for reference.</p>
                         <small className="d-block pb-3">* = required fields</small>
@@ -132,14 +176,18 @@ class AddSpeeches extends Component {
                             error={errors.date}
                             info="Please enter the approx date of the Speech"
                             ></TextFieldGroupInput>
-                        <SelectListGroup
+                            <div className="form-group"> 
+                         <TagsInput
+                            renderInput={autocompleteRenderInput} 
                             name="speechType"
-                            value={this.state.speechType}
-                            onChange={this.onChange}
-                            error={errors.speechType}
-                            options={options}
-                            info="What type of speech was it?"
-                            ></SelectListGroup>
+                            inputProps={{
+                                className: 'react-tagsinput-input',
+                                placeholder: "* Select Speech Types"
+                             } }
+                          value={this.state.speechType}
+                          onChange={this.handleSTChange}  />
+                          <small className="form-text text-muted">Enter tags for your Speech</small>
+                          </div>
                             <TextAreaFieldGroup
                               placeholder="Body of the speech"
                               name="speechBody"

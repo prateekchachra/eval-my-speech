@@ -5,7 +5,6 @@ module.exports = function validateLoginInput(data){
     let errors = {};
     
     data.titleOfSpeech = !isEmpty(data.titleOfSpeech) ? data.titleOfSpeech : '';
-     data.speechType = !isEmpty(data.speechType) ? data.speechType : '';
      data.club = !isEmpty(data.club) ? data.club : '';
      data.description = !isEmpty(data.description) ? data.description : '';
      data.date = !isEmpty(data.date) ? data.date : '';
